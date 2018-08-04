@@ -1,0 +1,12 @@
+run.config:
+  engine: python
+  engine.config:
+    runtime: python-3.6
+  extra_packages:
+    - nodejs
+  cache_dirs:
+    - node_modules
+  extra_steps:
+    - yarn
+data.db:
+  image: nanobox/postgresql:9.5
