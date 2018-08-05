@@ -1,0 +1,77 @@
+<template>
+  <div>
+    <div is="sui-segment" basic padded>
+      <h1 is="sui-header">
+        Layouts
+        <p is="sui-header-subheader">Examples of using Semantic UI React</p>
+      </h1>
+    </div>
+
+    <div is="sui-segment" basic padded>
+      <h2 is="sui-header">
+        Starter
+        <p is="sui-header-subheader">Examples to introduce components and their function</p>
+      </h2>
+
+      <div is="sui-card-group" :widths="3" stackable>
+        <router-link to="/layouts/theming" is="sui-card">
+          <sui-image src="static/images/layouts/theming.png" />
+          <sui-card-content>
+            <sui-card-header>Theming</sui-card-header>
+            <sui-card-description>
+              Examples of many common UI components, useful for testing custom themes.
+            </sui-card-description>
+          </sui-card-content>
+        </router-link>
+      </div>
+
+    </div>
+
+    <div is="sui-segment" basic padded>
+      <h2 is="sui-header">
+        Pages
+        <p is="sui-header-subheader">Starter page templates</p>
+      </h2>
+
+      <div is="sui-card-group" :widths="3" stackable>
+        <router-link to="/layouts/login" is="sui-card">
+          <sui-image src="static/images/layouts/login.png" />
+          <sui-card-content>
+            <sui-card-header>Login Form</sui-card-header>
+            <sui-card-description>
+              A full-screen login form
+            </sui-card-description>
+          </sui-card-content>
+        </router-link>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "HelloWorld",
+  props: {
+    msg: String
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>

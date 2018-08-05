@@ -7,6 +7,9 @@ run.config:
   cache_dirs:
     - node_modules
   extra_steps:
-    - yarn
+    - npm install
+  fs_watch: true
+web.client:
+  start: npm run serve
 data.db:
   image: nanobox/postgresql:9.5

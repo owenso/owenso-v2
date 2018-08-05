@@ -20,13 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2e_3xxfhv62as=$hkb@rlxf$dp)a&fja-%+en*gq4d)68s!0-r'
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True if os.environ["APP_NAME"] == "dev" else False
+# print('Debug Enabled for DEV Environment.') if os.environ["APP_NAME"] == "dev" else print("Debug Disabled.")
 
+DEBUG = True
 ALLOWED_HOSTS = [
-    'owenso.local'
+    'owenso.local',
+    'localhost',
 ]
 
 
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webpack_loader'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +60,8 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'public'), ],
+        # 'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,16 +80,16 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'gonano',
-        'USER': os.environ.get('DATA_DB_USER'),
-        'PASSWORD': os.environ.get('DATA_DB_PASS'),
-        'HOST': os.environ.get('DATA_DB_HOST'),
-        'PORT': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'gonano',
+#         'USER': os.environ.get('DATA_DB_USER'),
+#         'PASSWORD': os.environ.get('DATA_DB_PASS'),
+#         'HOST': os.environ.get('DATA_DB_HOST'),
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
@@ -123,4 +128,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATICFILES_DIRS = (
+    # os.path.join(BASE_DIR, 'dist'),
+    # os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'assets'),
+)
+# STATIC_ROOT = os.path.join(BASE_DIR, 'public')
 STATIC_URL = '/static/'
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'webpack_bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        # 'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
+#
+ADMINS=(
+    ('Owens', 'owensobrien@gmail.com'),
+)
