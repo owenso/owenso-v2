@@ -9,12 +9,12 @@ Vue.config.productionTip = process.env.NODE_ENV !== "production";
 Vue.use(SuiVue);
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title;
-  next()
+  if (to.meta.title) document.title = `Owens O'Brien - ${to.meta.title}`;
+  else document.title = `Owens O'Brien`;
+  next();
 });
 
 new Vue({
   router,
   render: h => h(App)
 }).$mount("#app");
-

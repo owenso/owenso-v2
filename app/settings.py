@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+import Naked.toolshed.shell
+import subprocess
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,15 +22,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
+# SECRET_KEY = "123"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True if os.environ["APP_NAME"] == "dev" else False
-# print('Debug Enabled for DEV Environment.') if os.environ["APP_NAME"] == "dev" else print("Debug Disabled.")
 
-DEBUG = True
+if os.environ["APP_NAME"] == "dev":
+    DEBUG = True
+    print('Running Dev Server')
+    proc = subprocess.Popen(['yarn run serve'], shell=True,
+                 stdin=None, stdout=None, stderr=None, close_fds=True)
+
+    print('Debug Enabled for DEV Environment.')
+else: 
+    DEBUG = False
+    print("Debug Disabled.")
+
 ALLOWED_HOSTS = [
     'owenso.local',
     'localhost',
+    '0.0.0.0'
 ]
 
 
@@ -80,16 +91,16 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'gonano',
-#         'USER': os.environ.get('DATA_DB_USER'),
-#         'PASSWORD': os.environ.get('DATA_DB_PASS'),
-#         'HOST': os.environ.get('DATA_DB_HOST'),
-#         'PORT': '',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'gonano',
+        'USER': os.environ.get('DATA_DB_USER'),
+        'PASSWORD': os.environ.get('DATA_DB_PASS'),
+        'HOST': os.environ.get('DATA_DB_HOST'),
+        'PORT': '',
+    }
+}
 
 
 # Password validation
@@ -124,6 +135,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+# APPEND_SLASH = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

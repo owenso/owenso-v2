@@ -4,12 +4,49 @@ run.config:
     runtime: python-3.6
   extra_packages:
     - nodejs
+    - inotify-tools
+    - nginx
   cache_dirs:
     - node_modules
+  extra_path_dirs:
+    - assets/node_modules/.bin
   extra_steps:
-    - npm install
+    - yarn
+    # - yarn run serve
+    # - python manage.py collectstatic --noinput --clear
   fs_watch: true
-web.client:
-  start: npm run serve
+
+# web.client:
+#   start:
+#     nginx: nginx -c /app/nginx/client.conf
+#     node: yarn run serve &
+#   writable_dirs:
+#     - app
+#   routes: 
+#     - '/frontend/'
+#   local_only: true
+
 data.db:
   image: nanobox/postgresql:9.5
+data.storage:
+  image: nanobox/unfs:0.9
+deploy.config:
+  # collect static assets during deploy
+  transform:
+    - python manage.py collectstatic --noinput --clear
+  before_live:
+    web.main:
+      - python manage.py migrate -- fake-initial
+      # - python manage.py migrate
+
+web.main:
+  start: 
+    nginx: nginx -c /app/nginx/server.conf
+    # node: python manage.py runserver 0.0.0.0:8000
+  # routes:
+  #   - '/'
+    # writable_dirs:
+    # - app
+  # local_only: true
+
+    
