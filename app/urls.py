@@ -21,6 +21,7 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^skills/', include('skills.urls')),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     #catch all and redirect
     # url(r'^(?:.*)/$', TemplateView.as_view(template_name='index.html')),
