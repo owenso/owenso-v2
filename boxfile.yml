@@ -4,28 +4,15 @@ run.config:
     runtime: python-3.6
   extra_packages:
     - nodejs
-    - inotify-tools
     - nginx
+    # - inotify-tools
   cache_dirs:
     - node_modules
   extra_path_dirs:
     - assets/node_modules/.bin
   extra_steps:
     - yarn
-    # - yarn run serve
-    # - python manage.py collectstatic --noinput --clear
   fs_watch: true
-
-# web.client:
-#   start:
-#     nginx: nginx -c /app/nginx/client.conf
-#     node: yarn run serve &
-#   writable_dirs:
-#     - app
-#   routes: 
-#     - '/frontend/'
-#   local_only: true
-
 data.db:
   image: nanobox/postgresql:9.5
 data.storage:
@@ -37,16 +24,13 @@ deploy.config:
   before_live:
     web.main:
       - python manage.py migrate -- fake-initial
-      # - python manage.py migrate
-
 web.main:
   start: 
-    nginx: nginx -c /app/nginx/server.conf
-    # node: python manage.py runserver 0.0.0.0:8000
-  # routes:
-  #   - '/'
-    # writable_dirs:
-    # - app
-  # local_only: true
-
-    
+    - nginx -c /app/etc/nginx.conf
+    # django: gunicorn -c /app/etc/gunicorn.py app.wsgi
+  writable_dirs:
+    - /app/logs
+    - /app/logs/nginx/
+  log_watch:
+    nginx[error]: /app/logs/nginx/error.log
+    nginx[access]: /app/logs/nginx-access.log    

@@ -23,5 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     #catch all and redirect
-    url(r'^(?:.*)/$', TemplateView.as_view(template_name='index.html')),
+    # url(r'^(?:.*)/$', TemplateView.as_view(template_name='index.html')),
 ]

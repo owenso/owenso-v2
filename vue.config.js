@@ -30,5 +30,6 @@ module.exports = {
   baseUrl:
     process.env.NODE_ENV === "production"
       ? "static/webpack_bundles/"
+      // : "/js"
       : "http://owenso.local:8008/"
 };

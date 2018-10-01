@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import Naked.toolshed.shell
+# import Naked.toolshed.shell
 import subprocess
+from django.apps import AppConfig
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,21 +28,25 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-if os.environ["APP_NAME"] == "dev":
-    DEBUG = True
-    print('Running Dev Server')
-    proc = subprocess.Popen(['yarn run serve'], shell=True,
-                 stdin=None, stdout=None, stderr=None, close_fds=True)
-
-    print('Debug Enabled for DEV Environment.')
-else: 
+if os.environ["APP_NAME"] != "dev":
     DEBUG = False
     print("Debug Disabled.")
+else: 
+    DEBUG = True
+    print('Running Dev Server')
+
+    # class startDevServer(AppConfig):
+    #     def ready(self):
+    #         proc = subprocess.Popen(['yarn run serve'], shell=True,
+    #                 stdin=None, stdout=None, stderr=None, close_fds=True)
+
+    print('Debug Enabled for DEV Environment.')
 
 ALLOWED_HOSTS = [
     'owenso.local',
     'localhost',
-    '0.0.0.0'
+    '0.0.0.0',
+    '172.21.0.13'
 ]
 
 
@@ -53,9 +59,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'webpack_loader'
+    'webpack_loader',
+    'projects',
+    'skills',
 ]
 
+if os.environ.get('RUN_MAIN', None) == 'true' and os.environ["APP_NAME"] == "dev":
+    INSTALLED_APPS.append('apps.startDevServer')
+    
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
