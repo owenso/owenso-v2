@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'projects',
     'skills',
+    'about'
 ]
 
 if os.environ.get('RUN_MAIN', None) == 'true' and os.environ["APP_NAME"] == "dev":
