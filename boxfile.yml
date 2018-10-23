@@ -12,7 +12,7 @@ run.config:
     - assets/node_modules/.bin
   extra_steps:
     - yarn
-  fs_watch: true
+  # fs_watch: true
 data.db:
   image: nanobox/postgresql:9.5
 data.storage:

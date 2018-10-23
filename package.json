@@ -12,6 +12,7 @@
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-vue": "^0.2.11",
     "vue": "^2.5.16",
+    "vue-carousel": "^0.15.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
