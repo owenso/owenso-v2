@@ -12,11 +12,14 @@
       {{info}}
     </div>
 
+    <InstaCarousel />
+
   </section>
 </template>
 
 <script>
 import axios from "axios";
+import InstaCarousel from "@/components/InstaCarousel.vue";
 
 export default {
   data() {
@@ -25,6 +28,9 @@ export default {
       loading: true,
       errored: null
     };
+  },
+  components: {
+    InstaCarousel
   },
   mounted() {
     console.log("Mounted and firing call");

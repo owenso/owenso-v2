@@ -8,7 +8,8 @@ Vue.use(Router);
 
 export default new Router({
   mode: "history",
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
+  // base:'http://owenso.local:8000/',
   routes: [
     {
       path: "/",
